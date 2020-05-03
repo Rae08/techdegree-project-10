@@ -1,8 +1,8 @@
 import React from 'react';
 import './styles/App.css';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import MainNav from './components/MainNav';
 import Courses from './components/Courses';
+import Header from './components/Header';
 
 class App extends React.Component {
   
@@ -10,7 +10,7 @@ class App extends React.Component {
     return(
       <div className="root">
         <BrowserRouter>
-        <MainNav />
+        <Header />
         <Courses />
         </BrowserRouter>
       </div>

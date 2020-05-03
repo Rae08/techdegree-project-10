@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-const MainNav = () => {
+const Header = () => {
   return (
     <div className="header">
       <div className="bounds">
@@ -19,4 +19,4 @@ const MainNav = () => {
   );
 };
 
-export default MainNav;
+export default Header;
