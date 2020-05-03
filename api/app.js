@@ -13,12 +13,16 @@ const enableGlobalErrorLogging =
 // create the Express app
 const app = express();
 
+// use CORS
+var cors = require('cors');
+
+app.use(cors());
+
 app.use(express.json());
 
 // setup morgan which gives us http request logging
 app.use(morgan("dev"));
 
-// TODO setup your api routes here
 
 // setup a friendly greeting for the root route
 app.get("/", (req, res) => {
