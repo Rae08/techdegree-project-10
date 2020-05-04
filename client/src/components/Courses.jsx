@@ -40,10 +40,7 @@ class Courses extends React.Component {
         <div className="bounds">
           {courses.map((course) => (
             <div className="grid-33" key={course.id}>
-              <a
-                className="course--module course--link"
-                href="course-detail.html"
-              >
+              <a className="course--module course--link" href={course.id}>
                 <h4 className="course--label">Course</h4>
                 <h3 className="course--title">{course.title}</h3>
               </a>
@@ -51,7 +48,7 @@ class Courses extends React.Component {
           ))}
           <div className="grid-33">
             <a
-              class="course--module course--add--module"
+              className="course--module course--add--module"
               href="create-course.html"
             >
               <h3 className="course--add--title">
@@ -61,7 +58,7 @@ class Courses extends React.Component {
                   x="0px"
                   y="0px"
                   viewBox="0 0 13 13"
-                  class="add"
+                  className="add"
                 >
                   <polygon points="7,6 7,0 6,0 6,6 0,6 0,7 6,7 6,13 7,13 7,7 13,7 13,6 "></polygon>
                 </svg>
