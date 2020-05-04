@@ -21,7 +21,11 @@ class App extends React.Component {
         <Route exact path="/" component={Courses} />
         <Route path="/courses/create" component={CreateCourse} />
         <Route path="/courses/:id/update" component={UpdateCourse} />
-        <Route path="/courses/:id" component={CourseDetail} />
+        <Route path="/courses/:id" render={routeProps => (
+                <CourseDetail
+                  {...routeProps}
+                />
+              )} />
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} />
         <Route component={NotFound} />

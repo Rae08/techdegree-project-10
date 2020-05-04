@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 class CreateCourse extends React.Component {
   render() {
@@ -69,7 +70,7 @@ class CreateCourse extends React.Component {
               </button>
               <button
                 className="button button-secondary"
-                onclick="event.preventDefault(); location.href='index.html';"
+                onclick={"event.preventDefault(); location.href='index.html';"}
               >
                 Cancel
               </button>
