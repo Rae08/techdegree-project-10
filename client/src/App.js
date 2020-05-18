@@ -9,12 +9,14 @@ import UserSignUp from './components/UserSignUp'
 import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import NotFound from './components/NotFound';
+import { Provider } from './Context';
 
 class App extends React.Component {
   
   render() {
     return(
       <div className="root">
+        <Provider>
         <BrowserRouter>
         <Header />
         <Switch>
@@ -31,6 +33,7 @@ class App extends React.Component {
         <Route component={NotFound} />
         </Switch>
         </BrowserRouter>
+        </Provider>
       </div>
     )
   }
