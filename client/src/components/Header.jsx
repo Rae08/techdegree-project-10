@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Provider, Consumer } from "../Context";
+import { Consumer } from "../Context";
 
 const Header = () => {
   return (
@@ -11,7 +11,10 @@ const Header = () => {
             <h1 className="header--logo">Courses</h1>
             {context.authenticatedUser ? (
               <nav>
-                <span>Welcome, {context.authenticatedUser.firstName}!</span>
+                <span>
+                  Welcome, {context.authenticatedUser.firstName}{" "}
+                  {context.authenticatedUser.lastName}!
+                </span>
                 <NavLink className="signout" to="/">
                   Sign Out
                 </NavLink>

@@ -17,7 +17,6 @@ class CourseDetail extends React.Component {
   }
 
   componentDidMount() {
-    // courseMaterials: result.course[0].materialsNeeded,
     this.getCourse();
   }
 
@@ -25,7 +24,6 @@ class CourseDetail extends React.Component {
     const url = `http://localhost:5000/api/courses/${this.state.courseId}`;
 
     let res = await axios.get(url);
-    let { data } = res.data;
     this.setState({
       course: res.data.course[0],
       courseUser: res.data.course[0].User,
@@ -110,12 +108,6 @@ class CourseDetail extends React.Component {
       </Consumer>
     );
   }
-
-  handleDelete = () => {
-    console.log(this.context);
-
-    // context.actions.delete(this.state.course.id);
-  };
 }
 
 export default CourseDetail;
