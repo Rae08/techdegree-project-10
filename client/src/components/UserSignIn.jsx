@@ -18,7 +18,7 @@ class UserSignIn extends React.Component {
             <div className="grid-33 centered signin">
               <h1>Sign In</h1>
               <div>
-                <form onSubmit={context.signIn}>
+                <form onSubmit={context.actions.signIn}>
                   <div>
                     <input
                       id="emailAddress"

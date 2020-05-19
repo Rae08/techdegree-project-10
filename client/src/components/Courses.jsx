@@ -41,13 +41,13 @@ class Courses extends React.Component {
         <div className="bounds">
           {courses.map((course) => (
             <div className="grid-33" key={course.id}>
-              <a
+              <Link
                 className="course--module course--link"
-                href={`/courses/${course.id}`}
+                to={`/courses/${course.id}`}
               >
                 <h4 className="course--label">Course</h4>
                 <h3 className="course--title">{course.title}</h3>
-              </a>
+              </Link>
             </div>
           ))}
           <div className="grid-33">
