@@ -47,29 +47,36 @@ class CourseDetail extends React.Component {
             <div className="actions--bar">
               <div className="bounds">
                 <div className="grid-100">
-                  <span>
-                    <Link
-                      className="button"
-                      to={`/courses/${course.id}/update`}
-                    >
-                      Update Course
+                  {context.authenticatedUser ? (
+                    <span>
+                      <Link
+                        className="button"
+                        to={`/courses/${course.id}/update`}
+                      >
+                        Update Course
+                      </Link>
+                      <Route
+                        render={({ history }) => (
+                          <Link
+                            className="button"
+                            onClick={(e) => {
+                              context.actions.delete(e, course.id, history);
+                            }}
+                          >
+                            Delete Course
+                          </Link>
+                        )}
+                      />
+
+                      <Link className="button button-secondary" to="/">
+                        Return to List
+                      </Link>
+                    </span>
+                  ) : (
+                    <Link className="button button-secondary" to="/">
+                      Return to List
                     </Link>
-                    <Route
-                      render={({ history }) => (
-                        <Link
-                          className="button"
-                          onClick={(e) => {
-                            context.actions.delete(e, course.id, history);
-                          }}
-                        >
-                          Delete Course
-                        </Link>
-                      )}
-                    />
-                  </span>
-                  <Link className="button button-secondary" to="/">
-                    Return to List
-                  </Link>
+                  )}
                 </div>
               </div>
             </div>
