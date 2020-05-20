@@ -19,7 +19,8 @@ export class Provider extends Component {
         password: this.state.password,
         actions: {
           signIn: this.signIn,
-          delete: this.delete
+          delete: this.delete,
+          signOut: this.signOut
         }
       }}>
         {this.props.children}
@@ -41,6 +42,14 @@ export class Provider extends Component {
       password: password
     }})
     .then(res => {this.setState({authenticatedUser: res.data, password: password})})
+  }
+
+  signOut = () => {
+    this.setState(() => {
+      return{
+        authenticatedUser: null,
+      };
+    });
   }
 
   delete = (e, id, history) => {

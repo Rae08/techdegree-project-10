@@ -15,7 +15,7 @@ const Header = () => {
                   Welcome, {context.authenticatedUser.firstName}{" "}
                   {context.authenticatedUser.lastName}!
                 </span>
-                <NavLink className="signout" to="/">
+                <NavLink className="signout" to="/signout">
                   Sign Out
                 </NavLink>
               </nav>

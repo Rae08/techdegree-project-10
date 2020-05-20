@@ -10,6 +10,7 @@ import CreateCourse from './components/CreateCourse';
 import UpdateCourse from './components/UpdateCourse';
 import NotFound from './components/NotFound';
 import { Provider } from './Context';
+import UserSignOut from './components/UserSignOut';
 
 class App extends React.Component {
   
@@ -30,6 +31,7 @@ class App extends React.Component {
               )} />
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} />
+        <Route path="/signout" component={UserSignOut} />
         <Route component={NotFound} />
         </Switch>
         </BrowserRouter>
