@@ -9,6 +9,7 @@ class CreateCourse extends React.Component {
     description: "",
     estimatedTime: "",
     materialsNeeded: "",
+    errors: null,
   };
 
   render() {
@@ -17,6 +18,21 @@ class CreateCourse extends React.Component {
         {(context) => (
           <div className="bounds course--detail">
             <h1>Create Course</h1>
+            {this.state.errors ? (
+              <div>
+                <h2 className="validation--errors--label">Validation errors</h2>
+                <div className="validation-errors">
+                  <ul>
+                    {this.state.errors.map((error) => (
+                      <li key={error}>{error}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ) : (
+              <div></div>
+            )}
+
             <div>
               <form
                 onSubmit={(e) => {
@@ -142,9 +158,8 @@ class CreateCourse extends React.Component {
       const emailAddress = authenticatedUser.username;
       const userId = authenticatedUser.id;
 
-      if (title && description && userId) {
-        console.log("Works!");
-        axios.post(
+      axios
+        .post(
           "http://localhost:5000/api/courses",
           {
             title: title,
@@ -159,10 +174,10 @@ class CreateCourse extends React.Component {
               password: password,
             },
           }
-        );
-      }
-    } else {
-      console.log("Login Required");
+        )
+        .catch((error) => {
+          this.setState({ errors: error.response.data.errorMessages });
+        });
     }
   };
 }
