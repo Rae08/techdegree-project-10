@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Link } from "react-router-dom";
 import { Consumer } from "../Context";
 import axios from "axios";
+import ReactMarkdown from "react-markdown";
 
 class CourseDetail extends React.Component {
   constructor(props) {
@@ -11,7 +12,6 @@ class CourseDetail extends React.Component {
       isLoaded: false,
       courseId: this.props.match.params.id,
       course: [],
-      courseMaterials: [],
       courseUser: {},
     };
   }
@@ -27,18 +27,12 @@ class CourseDetail extends React.Component {
     this.setState({
       course: res.data.course[0],
       courseUser: res.data.course[0].User,
-      courseMaterials: res.data.course[0].materialsNeeded,
     });
   };
 
   render() {
     const course = this.state.course;
     const courseUser = this.state.courseUser;
-    let materialsNeeded = [];
-
-    if (this.state.courseMaterials) {
-      materialsNeeded = this.state.courseMaterials.toString().split("\n");
-    }
 
     return (
       <Consumer>
@@ -88,7 +82,9 @@ class CourseDetail extends React.Component {
                   <p>{`By ${courseUser.firstName} ${courseUser.lastName}`}</p>
                 </div>
                 <div className="course--description">
-                  <p>{course.description}</p>
+                  <p>
+                    <ReactMarkdown>{course.description}</ReactMarkdown>
+                  </p>
                 </div>
               </div>
               <div className="grid-25 grid-right">
@@ -101,9 +97,9 @@ class CourseDetail extends React.Component {
                     <li className="course--stats--list--item">
                       <h4>Materials Needed</h4>
                       <ul>
-                        {materialsNeeded.map((material) => (
-                          <li>{material}</li>
-                        ))}
+                        <ReactMarkdown>
+                          {this.state.course.materialsNeeded}
+                        </ReactMarkdown>
                       </ul>
                     </li>
                   </ul>
