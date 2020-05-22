@@ -1,6 +1,7 @@
 import React from "react";
-import { Consumer, Provider } from "../Context";
-import { Link, Redirect } from "react-router-dom";
+import { Consumer } from "../Context";
+import { Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 class UserSignIn extends React.Component {
   state = {
@@ -18,44 +19,49 @@ class UserSignIn extends React.Component {
             <div className="grid-33 centered signin">
               <h1>Sign In</h1>
               <div>
-                <form onSubmit={context.actions.signIn}>
-                  <div>
-                    <input
-                      id="emailAddress"
-                      name="emailAddress"
-                      type="text"
-                      className=""
-                      placeholder="Email Address"
-                      value={emailAddress}
-                      onChange={this.change}
-                    />
-                  </div>
-                  <div>
-                    <input
-                      id="password"
-                      name="password"
-                      type="password"
-                      className=""
-                      placeholder="Password"
-                      value={password}
-                      onChange={this.change}
-                    />
-                  </div>
-                  <div className="grid-100 pad-bottom">
-                    <button className="button" type="submit">
-                      Sign In
-                    </button>
-                    <button
-                      className="button button-secondary"
-                      onClick={this.cancel}
+                <Route
+                  render={({ history }) => (
+                    <form
+                      onSubmit={(e) => {
+                        context.actions.signIn(e, history);
+                      }}
                     >
-                      Cancel
-                    </button>
-                  </div>
-                </form>
+                      <div>
+                        <input
+                          id="emailAddress"
+                          name="emailAddress"
+                          type="text"
+                          className=""
+                          placeholder="Email Address"
+                          value={emailAddress}
+                          onChange={this.change}
+                        />
+                      </div>
+                      <div>
+                        <input
+                          id="password"
+                          name="password"
+                          type="password"
+                          className=""
+                          placeholder="Password"
+                          value={password}
+                          onChange={this.change}
+                        />
+                      </div>
+                      <div className="grid-100 pad-bottom">
+                        <button className="button" type="submit">
+                          Sign In
+                        </button>
+                        <Link className="button button-secondary" to="/">
+                          Cancel
+                        </Link>
+                      </div>
+                    </form>
+                  )}
+                ></Route>
               </div>
               <p>
-                Don't have a user account? <Link to="/signup">Click here</Link>
+                Don't have a user account? <Link to="/signup">Click here </Link>
                 to sign up!
               </p>
             </div>
@@ -74,10 +80,6 @@ class UserSignIn extends React.Component {
         [name]: value,
       };
     });
-  };
-
-  cancel = () => {
-    this.props.history.push("/");
   };
 }
 

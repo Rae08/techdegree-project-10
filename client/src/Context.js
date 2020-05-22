@@ -28,14 +28,13 @@ export class Provider extends Component {
     )
   }
 
-  signIn = async (e) => {
+  signIn = async (e, history) => {
     e.preventDefault();
-    console.log(e.target[0].value);
-    console.log(e.target[1].value);
+    console.log(history);
+
     
     const emailAddress = e.target[0].value;
     const password = e.target[1].value;
-    const user = null;
     
     await axios.get('http://localhost:5000/api/users', {  auth: {
       username: emailAddress,
@@ -44,6 +43,8 @@ export class Provider extends Component {
     .then(res => {this.setState({authenticatedUser: {firstName:res.data.firstName, lastName: res.data.lastName, username: emailAddress, password: password, id: res.data.id }})})
 
     Cookies.set('authenticatedUser', JSON.stringify(this.state.authenticatedUser), { expires: 1 })
+
+    history.goBack();
   }
 
   signOut = () => {
