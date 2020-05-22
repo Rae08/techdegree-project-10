@@ -141,10 +141,8 @@ class UserSignUp extends React.Component {
           this.setState({ errors: error.response.data.errorMessages });
         }
 
-        if (error.response.data.message) {
-          let errors = [];
-          errors.push(error.response.data.message);
-          this.setState({ errors: errors });
+        if (error.response.status === 500) {
+          this.props.history.push("/error");
         }
       });
   };

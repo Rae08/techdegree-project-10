@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 class Courses extends React.Component {
   constructor(props) {
@@ -12,29 +13,30 @@ class Courses extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5000/api/courses")
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            isLoaded: true,
-            courses: result.courses,
-          });
-        },
-        (error) => {
-          this.setState({
-            isLoaded: true,
-            error,
-          });
-        }
-      );
+    this.getCourses();
   }
 
+  getCourses = async () => {
+    const url = `http://localhost:5000/api/courses/`;
+
+    await axios
+      .get(url)
+      .then((res) => {
+        this.setState({
+          isLoaded: true,
+          courses: res.data.courses,
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 500) {
+          this.props.history.push("/error");
+        }
+      });
+  };
+
   render() {
-    const { error, isLoaded, courses } = this.state;
-    if (error) {
-      return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
+    const { isLoaded, courses } = this.state;
+    if (!isLoaded) {
       return <div>Loading...</div>;
     } else {
       return (

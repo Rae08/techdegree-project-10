@@ -154,7 +154,16 @@ router.post(
       checkNull: true,
       checkFalsy: true
     })
-    .withMessage('Please provide a value for "Password"')
+    .withMessage('Please provide a value for "Password"'),
+    check("emailAddress").custom(email => {
+      return User.findAll({where: {
+        emailAddress: email
+      }}).then(user => {
+        if (user) {
+          return Promise.reject('Email is already in use')
+        }
+      })
+    }).withMessage('Email is already in use')
   ],
   asyncHandler(async (req, res) => {
     const errors = validationResult(req);

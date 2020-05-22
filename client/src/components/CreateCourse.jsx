@@ -175,7 +175,11 @@ class CreateCourse extends React.Component {
           }
         )
         .catch((error) => {
-          this.setState({ errors: error.response.data.errorMessages });
+          if (error.response.status === 500) {
+            this.props.history.push("/error");
+          } else {
+            this.setState({ errors: error.response.data.errorMessages });
+          }
         });
     }
   };

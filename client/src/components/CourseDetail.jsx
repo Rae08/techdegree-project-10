@@ -23,11 +23,23 @@ class CourseDetail extends React.Component {
   getCourse = async () => {
     const url = `http://localhost:5000/api/courses/${this.state.courseId}`;
 
-    let res = await axios.get(url);
-    this.setState({
-      course: res.data.course[0],
-      courseUser: res.data.course[0].User,
-    });
+    await axios
+      .get(url)
+      .then((res) => {
+        this.setState({
+          course: res.data.course[0],
+          courseUser: res.data.course[0].User,
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          this.props.history.push("/notfound");
+        }
+
+        if (error.response.status === 500) {
+          this.props.history.push("/error");
+        }
+      });
   };
 
   render() {
@@ -52,6 +64,7 @@ class CourseDetail extends React.Component {
                       <Route
                         render={({ history }) => (
                           <Link
+                            to=""
                             className="button"
                             onClick={(e) => {
                               context.actions.delete(e, course.id, history);
@@ -82,9 +95,7 @@ class CourseDetail extends React.Component {
                   <p>{`By ${courseUser.firstName} ${courseUser.lastName}`}</p>
                 </div>
                 <div className="course--description">
-                  <p>
-                    <ReactMarkdown>{course.description}</ReactMarkdown>
-                  </p>
+                  <ReactMarkdown>{course.description}</ReactMarkdown>
                 </div>
               </div>
               <div className="grid-25 grid-right">

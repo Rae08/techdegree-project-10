@@ -24,15 +24,27 @@ class UpdateCourse extends React.Component {
   getCourse = async () => {
     const url = `http://localhost:5000/api/courses/${this.state.courseId}`;
 
-    let res = await axios.get(url);
-    this.setState({
-      courseUser: res.data.course[0].User,
-      courseMaterials: res.data.course[0].materialsNeeded,
-      title: res.data.course[0].title,
-      description: res.data.course[0].description,
-      estimatedTime: res.data.course[0].estimatedTime,
-      materialsNeeded: res.data.course[0].materialsNeeded,
-    });
+    await axios
+      .get(url)
+      .then((res) => {
+        this.setState({
+          courseUser: res.data.course[0].User,
+          courseMaterials: res.data.course[0].materialsNeeded,
+          title: res.data.course[0].title,
+          description: res.data.course[0].description,
+          estimatedTime: res.data.course[0].estimatedTime,
+          materialsNeeded: res.data.course[0].materialsNeeded,
+        });
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          this.props.history.push("/notfound");
+        }
+
+        if (error.response.status === 500) {
+          this.props.history.push("/error");
+        }
+      });
   };
 
   render() {
@@ -180,29 +192,31 @@ class UpdateCourse extends React.Component {
       const userId = authenticatedUser.id;
       const password = authenticatedUser.password;
       const url = `http://localhost:5000/api/courses/${courseId}`;
-      console.log(authenticatedUser.password);
 
-      console.log("Works!");
-      await axios
-        .put(
-          url,
-          {
-            title: title,
-            description: description,
-            estimatedTime: estimatedTime,
-            materialsNeeded: materialsNeeded,
-            userId: userId,
-          },
-          {
-            auth: {
-              username: emailAddress,
-              password: password,
+      if (userId === this.state.courseUser.id) {
+        await axios
+          .put(
+            url,
+            {
+              title: title,
+              description: description,
+              estimatedTime: estimatedTime,
+              materialsNeeded: materialsNeeded,
+              userId: userId,
             },
-          }
-        )
-        .catch((error) => {
-          this.setState({ errors: error.response.data.errorMessages });
-        });
+            {
+              auth: {
+                username: emailAddress,
+                password: password,
+              },
+            }
+          )
+          .catch((error) => {
+            this.setState({ errors: error.response.data.errorMessages });
+          });
+      } else {
+        this.props.history.push("/forbidden");
+      }
     }
   };
 }

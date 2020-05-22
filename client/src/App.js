@@ -11,6 +11,8 @@ import UpdateCourse from './components/UpdateCourse';
 import NotFound from './components/NotFound';
 import { Provider } from './Context';
 import UserSignOut from './components/UserSignOut';
+import Forbidden from './components/Forbidden';
+import UnhandledError from './components/UnhandledError';
 import PrivateRoute from './PrivateRoute';
 
 class App extends React.Component {
@@ -33,6 +35,9 @@ class App extends React.Component {
         <Route path="/signin" component={UserSignIn} />
         <Route path="/signup" component={UserSignUp} />
         <Route path="/signout" component={UserSignOut} />
+        <Route path="/forbidden" component={Forbidden} />
+        <Route path="/notfound" component={NotFound} />
+        <Route path="/error" component={UnhandledError} />
         <Route component={NotFound} />
         </Switch>
         </BrowserRouter>
