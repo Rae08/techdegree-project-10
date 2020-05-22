@@ -66,7 +66,6 @@ class UpdateCourse extends React.Component {
                     this.state.description,
                     this.state.estimatedTime,
                     this.state.materialsNeeded,
-                    context.password,
                     this.state.courseId
                   );
                 }}
@@ -165,14 +164,13 @@ class UpdateCourse extends React.Component {
     });
   };
 
-  handleSubmit = (
+  handleSubmit = async (
     e,
     authenticatedUser,
     title,
     description,
     estimatedTime,
     materialsNeeded,
-    password,
     courseId
   ) => {
     e.preventDefault();
@@ -180,10 +178,12 @@ class UpdateCourse extends React.Component {
     if (authenticatedUser) {
       const emailAddress = authenticatedUser.username;
       const userId = authenticatedUser.id;
+      const password = authenticatedUser.password;
       const url = `http://localhost:5000/api/courses/${courseId}`;
+      console.log(authenticatedUser.password);
 
       console.log("Works!");
-      axios
+      await axios
         .put(
           url,
           {

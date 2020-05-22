@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Context = React.createContext();
 
 
 export class Provider extends Component {
   state = {
-    authenticatedUser: null,
-    password: null,
+    authenticatedUser: Cookies.getJSON('authenticatedUser') || null,
   }
 
   render() {
@@ -28,20 +28,22 @@ export class Provider extends Component {
     )
   }
 
-  signIn = (e) => {
+  signIn = async (e) => {
     e.preventDefault();
     console.log(e.target[0].value);
     console.log(e.target[1].value);
     
     const emailAddress = e.target[0].value;
     const password = e.target[1].value;
-
+    const user = null;
     
-    axios.get('http://localhost:5000/api/users', {  auth: {
+    await axios.get('http://localhost:5000/api/users', {  auth: {
       username: emailAddress,
       password: password
     }})
-    .then(res => {this.setState({authenticatedUser: res.data, password: password})})
+    .then(res => {this.setState({authenticatedUser: {firstName:res.data.firstName, lastName: res.data.lastName, username: emailAddress, password: password, id: res.data.id }})})
+
+    Cookies.set('authenticatedUser', JSON.stringify(this.state.authenticatedUser), { expires: 1 })
   }
 
   signOut = () => {
@@ -50,6 +52,8 @@ export class Provider extends Component {
         authenticatedUser: null,
       };
     });
+
+    Cookies.remove('authenticatedUser');
   }
 
   delete = (e, id, history) => {
@@ -59,7 +63,7 @@ export class Provider extends Component {
 
     if (this.state.authenticatedUser) {
       const emailAddress = this.state.authenticatedUser.username;
-      const password = this.state.password;
+      const password = this.authenticatedUser.password;
       axios.delete(url, {
         auth: {
           username: emailAddress,

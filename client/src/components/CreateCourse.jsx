@@ -42,8 +42,7 @@ class CreateCourse extends React.Component {
                     this.state.title,
                     this.state.description,
                     this.state.estimatedTime,
-                    this.state.materialsNeeded,
-                    context.password
+                    this.state.materialsNeeded
                   );
                 }}
               >
@@ -149,13 +148,13 @@ class CreateCourse extends React.Component {
     title,
     description,
     estimatedTime,
-    materialsNeeded,
-    password
+    materialsNeeded
   ) => {
     e.preventDefault();
 
     if (authenticatedUser) {
       const emailAddress = authenticatedUser.username;
+      const password = authenticatedUser.password;
       const userId = authenticatedUser.id;
 
       axios
