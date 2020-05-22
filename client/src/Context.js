@@ -77,30 +77,5 @@ export class Provider extends Component {
     Cookies.remove("authenticatedUser");
   };
 
-  delete = (e, id, history) => {
-    e.preventDefault();
-    const url = `http://localhost:5000/api/courses/${id}`;
-    console.log(this.state.authenticatedUser);
-
-    if (this.state.authenticatedUser) {
-      const emailAddress = this.state.authenticatedUser.username;
-      const password = this.authenticatedUser.password;
-      axios.delete(url, {
-        auth: {
-          username: emailAddress,
-          password: password,
-        },
-      })
-      .catch((error) => {
-        if (error.response.status === 500) {
-          this.props.history.push("/error");
-        }
-      });;
-
-      history.push("/");
-    } else {
-      console.log("Login required");
-    }
-  };
 }
 export const Consumer = Context.Consumer;

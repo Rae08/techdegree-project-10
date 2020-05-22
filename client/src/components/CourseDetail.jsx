@@ -67,7 +67,12 @@ class CourseDetail extends React.Component {
                             to=""
                             className="button"
                             onClick={(e) => {
-                              context.actions.delete(e, course.id, history);
+                              this.delete(
+                                e,
+                                course.id,
+                                history,
+                                context.authenticatedUser
+                              );
                             }}
                           >
                             Delete Course
@@ -122,6 +127,30 @@ class CourseDetail extends React.Component {
       </Consumer>
     );
   }
+
+  delete = (e, id, history, user) => {
+    e.preventDefault();
+    const url = `http://localhost:5000/api/courses/${id}`;
+
+    if (user) {
+      const emailAddress = user.username;
+      const password = user.password;
+      axios
+        .delete(url, {
+          auth: {
+            username: emailAddress,
+            password: password,
+          },
+        })
+        .catch((error) => {
+          if (error.response.status === 500) {
+            this.props.history.push("/error");
+          }
+        });
+
+      history.push("/");
+    }
+  };
 }
 
 export default CourseDetail;
