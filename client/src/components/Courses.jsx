@@ -12,10 +12,12 @@ class Courses extends React.Component {
     };
   }
 
+  // when the component loads, calls getCourse to load the data for all courses
   componentDidMount() {
     this.getCourses();
   }
 
+  // GET request to /courses for all course data
   getCourses = async () => {
     const url = `http://localhost:5000/api/courses/`;
 
@@ -34,6 +36,7 @@ class Courses extends React.Component {
       });
   };
 
+  // displays each course in a separate card, linked to course details page
   render() {
     const { isLoaded, courses } = this.state;
     if (!isLoaded) {

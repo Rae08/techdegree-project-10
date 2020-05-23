@@ -17,10 +17,12 @@ class UpdateCourse extends React.Component {
     };
   }
 
+  // when component loads calls getCourse to load cours data
   componentDidMount() {
     this.getCourse();
   }
 
+  //  GET request for course data
   getCourse = async () => {
     const url = `http://localhost:5000/api/courses/${this.state.courseId}`;
 
@@ -47,6 +49,7 @@ class UpdateCourse extends React.Component {
       });
   };
 
+  // displays the course data
   render() {
     return (
       <Consumer>
@@ -165,6 +168,8 @@ class UpdateCourse extends React.Component {
       </Consumer>
     );
   }
+
+  // change handler updates state with the current value of input fields
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -176,6 +181,7 @@ class UpdateCourse extends React.Component {
     });
   };
 
+  //  on submit PUT request to update course
   handleSubmit = async (
     e,
     authenticatedUser,
@@ -187,6 +193,11 @@ class UpdateCourse extends React.Component {
   ) => {
     e.preventDefault();
 
+    // if title and description are not blank, clears any previous errors
+    if (title && description) {
+      this.setState({ errors: null });
+    }
+    // must be logged in and the course owner to update the course
     if (authenticatedUser) {
       const emailAddress = authenticatedUser.username;
       const userId = authenticatedUser.id;

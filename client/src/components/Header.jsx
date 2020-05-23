@@ -9,6 +9,7 @@ const Header = () => {
         <div className="header">
           <div className="bounds">
             <h1 className="header--logo">Courses</h1>
+            {/* If a user is logged in, displays thier name and sign out button */}
             {context.authenticatedUser ? (
               <nav>
                 <span>

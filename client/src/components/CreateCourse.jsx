@@ -12,6 +12,7 @@ class CreateCourse extends React.Component {
     errors: null,
   };
 
+  // displays the create course form
   render() {
     return (
       <Consumer>
@@ -60,10 +61,10 @@ class CreateCourse extends React.Component {
                         onChange={this.change}
                       />
                     </div>
-                    {this.context.authenticatedUser ? (
+                    {context.authenticatedUser ? (
                       <p>
-                        By {this.context.authenticatedUser.firstName}{" "}
-                        {this.context.authenticatedUser.lastName}
+                        By {context.authenticatedUser.firstName}{" "}
+                        {context.authenticatedUser.lastName}
                       </p>
                     ) : (
                       <p>By</p>
@@ -131,6 +132,7 @@ class CreateCourse extends React.Component {
     );
   }
 
+  //  change handler to pass the current value of input field into state
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;
@@ -142,6 +144,7 @@ class CreateCourse extends React.Component {
     });
   };
 
+  // after submit POST request
   handleSubmit = (
     e,
     authenticatedUser,
@@ -152,11 +155,18 @@ class CreateCourse extends React.Component {
   ) => {
     e.preventDefault();
 
+    // user must be logged in to create a course
     if (authenticatedUser) {
       const emailAddress = authenticatedUser.username;
       const password = authenticatedUser.password;
       const userId = authenticatedUser.id;
 
+      // the the title and description are not blank, clears any previous errors
+      if (title && description) {
+        this.setState({ errors: null });
+      }
+
+      // POST request to /courses
       axios
         .post(
           "http://localhost:5000/api/courses",

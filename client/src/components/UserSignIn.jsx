@@ -11,7 +11,10 @@ class UserSignIn extends React.Component {
 
   render() {
     const { emailAddress, password } = this.state;
+    // signIn gets passed to the signIn method in context so that we can tell if the request came from the Sign In form or somewhere else. It is used to determine where to re-direct the user after sign in.
+    const signIn = true;
 
+    // sign in form
     return (
       <Consumer>
         {(context) => (
@@ -23,7 +26,13 @@ class UserSignIn extends React.Component {
                   render={({ history }) => (
                     <form
                       onSubmit={(e) => {
-                        context.actions.signIn(e, history);
+                        context.actions.signIn(
+                          e,
+                          history,
+                          this.state.emailAddress,
+                          this.state.password,
+                          signIn
+                        );
                       }}
                     >
                       <div>
@@ -71,6 +80,7 @@ class UserSignIn extends React.Component {
     );
   }
 
+  // change handler to set the state wih the current value of input fields
   change = (event) => {
     const name = event.target.name;
     const value = event.target.value;

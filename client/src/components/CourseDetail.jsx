@@ -16,10 +16,13 @@ class CourseDetail extends React.Component {
     };
   }
 
+  // when component loads, call getCourse to load course data
   componentDidMount() {
     this.getCourse();
   }
 
+  // GET request for course data
+  // Sets course state
   getCourse = async () => {
     const url = `http://localhost:5000/api/courses/${this.state.courseId}`;
 
@@ -42,6 +45,7 @@ class CourseDetail extends React.Component {
       });
   };
 
+  //displays the course details
   render() {
     const course = this.state.course;
     const courseUser = this.state.courseUser;
@@ -53,7 +57,9 @@ class CourseDetail extends React.Component {
             <div className="actions--bar">
               <div className="bounds">
                 <div className="grid-100">
-                  {context.authenticatedUser ? (
+                  {/* Delete button and update course button only display if the logged in user is the owner of the course */}
+                  {context.authenticatedUser &&
+                  context.authenticatedUser.id === courseUser.id ? (
                     <span>
                       <Link
                         className="button"
@@ -128,6 +134,7 @@ class CourseDetail extends React.Component {
     );
   }
 
+  // DELETE request
   delete = (e, id, history, user) => {
     e.preventDefault();
     const url = `http://localhost:5000/api/courses/${id}`;
@@ -147,8 +154,6 @@ class CourseDetail extends React.Component {
             this.props.history.push("/error");
           }
         });
-
-      history.push("/");
     }
   };
 }
