@@ -32,12 +32,10 @@ export class Provider extends Component {
   // POST request to /users
   // Calls the SignIn method after creating the user and re-directs to the root page
   signUp = async (e, history, firstName, lastName, emailAddress, password) => {
+    e.persist();
     e.preventDefault();
-    console.log(firstName);
     const signIn = false;
 
-   
-    
    await axios
       .post("http://localhost:5000/api/users", {
         firstName: firstName,
@@ -111,14 +109,14 @@ export class Provider extends Component {
 
   // signs out the user and clears cookies
   signOut = () => {
-    this.setState(() => {
-      return {
-        authenticatedUser: null,
-      };
-    });
+    this.setState({ authenticatedUser: null});
 
     Cookies.remove("authenticatedUser");
   };
 
+  
+
 }
+
+
 export const Consumer = Context.Consumer;

@@ -156,7 +156,6 @@ router.post(
     })
     .withMessage('Please provide a value for "Password"'),
     check("emailAddress").custom(email => {
-      console.log(email);
       
       return User.findAll({where: {
         emailAddress: email

@@ -15,9 +15,9 @@ import Forbidden from './components/Forbidden';
 import UnhandledError from './components/UnhandledError';
 import PrivateRoute from './PrivateRoute';
 
-class App extends React.Component {
+const App = () => {
   
-  render() {
+ 
     return(
       <div className="root">
         <Provider>
@@ -44,7 +44,6 @@ class App extends React.Component {
         </Provider>
       </div>
     )
-  }
 }
 
 export default App;

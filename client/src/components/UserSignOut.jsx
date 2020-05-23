@@ -7,7 +7,6 @@ const UserSignOut = () => {
     <Consumer>
       {(context) => {
         context.actions.signOut();
-
         return <Redirect to="/" />;
       }}
     </Consumer>
